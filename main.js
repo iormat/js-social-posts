@@ -34,7 +34,7 @@ const postsArr = [
 
     {
         "name": "Jane Doe",
-        "profilePic": "https://unsplash.it/300/300?image",
+        "profilePic": "",
         "date": "6 mesi fa",
         "postText": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Et nihil ullam aut alias.",
         "image": "https://unsplash.it/300/300?image",
@@ -48,13 +48,26 @@ const postsArr = [
         "postText": "Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
         "image": "https://unsplash.it/300/300?image",
         "likes": 34,
+    },
+
+    {
+        "name": "Jack Doe",
+        "profilePic": "https://unsplash.it/300/300?image",
+        "date": "1 mesi fa",
+        "postText": "Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
+        "image": "",
+        "likes": 12,
     }
+
 ];
+
+// create variable to print
+const printVariable = document.querySelector('.posts-list');
 
 // create a function to print objects values
 function addNewPost (name, profilePic, date, postText, image, likes, i) {
     // 2.
-    document.querySelector('.posts-list').innerHTML +=`
+    printVariable.innerHTML +=`
     <div class="post">
         <div class="post__header">
             <div class="post-meta">                    
@@ -74,32 +87,41 @@ function addNewPost (name, profilePic, date, postText, image, likes, i) {
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button js-like-button" data-postid=1>
+                    <a class="like-button js-like-button" data-postid="${i}">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label"> Mi Piace </span>
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-${i}" class="js-likes-counter">${likes}</b> persone
+                    Piace a <b id="like-counter-0 class="js-likes-counter">${likes}</b> persone
                 </div>
             </div> 
         </div>            
-    </div>`;
+    </div>`;       
 }
 
 // print new post for each object
 for(let i = 0; i < postsArr.length; i++) {
-    const {name, profilePic, date, postText, image, likes} = postsArr[i];
+    let {name, profilePic, date, postText, image, likes} = postsArr[i];
+    if(profilePic === "") {
+        profilePic = "img/unknown-profile-pic.jpg";
+    }else if(image === "") {
+        image = "img/unreadble-image.jpg";
+    }
     addNewPost (name, profilePic, date, postText, image, likes, i);
-    
-    // toggle class on click
-    let likeButton = document.getElementsByClassName('like-button')
-    for(let i = 0; i < likeButton.length; i++) {
-        likeButton[i].addEventListener('click',
-            function(){
-                likeButton[i].classList.toggle('like-button--liked');
+
+    // toggle class and add to counter on click
+    let likeButtons = document.getElementsByClassName('like-button')
+    for(let i = 0; i < likeButtons.length; i++) {
+        likeButtons[i].addEventListener('click',
+            function() {
+                likeButtons[i].classList.toggle('like-button--liked');
+                const likesCounter = this.getAttribute('data-postid');
+                postsArr[likesCounter].likes++;
+                console.log(postsArr[likesCounter].likes++);
             }
         );
-    }
+    }     
 }
+
 
