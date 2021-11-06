@@ -25,7 +25,7 @@ const postsArr = [
     // 1.2
     {
         "name": "John Doe",
-        "profilePic": "https://unsplash.it/300/300?image",
+        "profilePic": "",
         "date": "3 mesi fa",
         "postText": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
         "image": "https://unsplash.it/300/300?image",
@@ -34,10 +34,10 @@ const postsArr = [
 
     {
         "name": "Jane Doe",
-        "profilePic": "",
+        "profilePic": "https://unsplash.it/300/300?image",
         "date": "6 mesi fa",
         "postText": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Et nihil ullam aut alias.",
-        "image": "https://unsplash.it/300/300?image",
+        "image": "",
         "likes": 67,
     },
 
@@ -52,7 +52,7 @@ const postsArr = [
 
     {
         "name": "Jack Doe",
-        "profilePic": "https://unsplash.it/300/300?image",
+        "profilePic": "",
         "date": "1 mesi fa",
         "postText": "Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
         "image": "",
@@ -93,35 +93,54 @@ function addNewPost (name, profilePic, date, postText, image, likes, i) {
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-0 class="js-likes-counter">${likes}</b> persone
+                    Piace a <b id="${i}" class="js-likes-counter">${likes}</b> persone
                 </div>
             </div> 
         </div>            
-    </div>`;       
-}
+    </div>`;    
+}    
 
 // print new post for each object
 for(let i = 0; i < postsArr.length; i++) {
     let {name, profilePic, date, postText, image, likes} = postsArr[i];
-    if(profilePic === "") {
+    
+    if(profilePic === "" && image === "") {
+        profilePic = "img/unknown-profile-pic.jpg";
+        image = "img/unreadble-image.jpg";
+    }else if(profilePic === "") {
         profilePic = "img/unknown-profile-pic.jpg";
     }else if(image === "") {
         image = "img/unreadble-image.jpg";
     }
-    addNewPost (name, profilePic, date, postText, image, likes, i);
+
+    // function to print 
+    addNewPost (name, profilePic, date, postText, image, likes, i);  
 
     // toggle class and add to counter on click
-    let likeButtons = document.getElementsByClassName('like-button')
-    for(let i = 0; i < likeButtons.length; i++) {
+    let likeButtons = document.getElementsByClassName('like-button');
+    // cycle to get each button separatly
+    for(let i = 0; i < likeButtons.length; i++) {                   
         likeButtons[i].addEventListener('click',
-            function() {
+            // function to get liked button appearance 
+            function () {                                           
                 likeButtons[i].classList.toggle('like-button--liked');
                 const likesCounter = this.getAttribute('data-postid');
-                postsArr[likesCounter].likes++;
-                console.log(postsArr[likesCounter].likes++);
+                // console.log(postsArr[likesCounter].likes);
+                let findLikes = document.getElementById(i);
+                console.log(findLikes);
+                console.log(likeButtons[i].classList)
+                // condition to add or remove likes number based on liked or not
+                if(likeButtons[i].classList.contains('like-button--liked')) {
+                    postsArr[likesCounter].likes++; // increment likes counter
+                    findLikes.innerHTML = postsArr[likesCounter].likes;
+                }else {
+                    postsArr[likesCounter].likes--; // decrement likes counter
+                    findLikes.innerHTML = postsArr[likesCounter].likes
+                }
             }
         );
-    }     
+    };
+
 }
 
 
