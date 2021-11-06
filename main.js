@@ -72,7 +72,7 @@ function addNewPost (name, profilePic, date, postText, image, likes, i) {
         <div class="post__header">
             <div class="post-meta">                    
                 <div class="post-meta__icon">
-                    <img class="profile-pic" src="${profilePic}" alt="${name}">                    
+                    <img class="profile-pic" src="${profilePic}" alt="${name}" onerror="profileImgErr(this)">                    
                 </div>
                 <div class="post-meta__data">
                     <div class="post-meta__author">${name}</div>
@@ -82,7 +82,7 @@ function addNewPost (name, profilePic, date, postText, image, likes, i) {
         </div>
         <div class="post__text">${postText}</div>
         <div class="post__image">
-            <img src="${image}" alt="">
+            <img src="${image}" alt="" onerror="imgError(this);">
         </div>
         <div class="post__footer">
             <div class="likes js-likes">
@@ -100,17 +100,19 @@ function addNewPost (name, profilePic, date, postText, image, likes, i) {
     </div>`;    
 }    
 
+
 // print new post for each object
 for(let i = 0; i < postsArr.length; i++) {
     let {name, profilePic, date, postText, image, likes} = postsArr[i];
-    
-    if(profilePic === "" && image === "") {
-        profilePic = "img/unknown-profile-pic.jpg";
-        image = "img/unreadble-image.jpg";
-    }else if(profilePic === "") {
-        profilePic = "img/unknown-profile-pic.jpg";
-    }else if(image === "") {
-        image = "img/unreadble-image.jpg";
+
+    // function to get placeholder img in case of image error
+    function imgError(imageErr) {
+        imageErr.src = "img/unreadble-image.jpg";
+    }
+
+    // function to get placeholder img in case of profilePic error
+    function profileImgErr(profileErr) {
+        profileErr.src = "img/unknown-profile-pic.jpg";
     }
 
     // function to print 
@@ -125,10 +127,7 @@ for(let i = 0; i < postsArr.length; i++) {
             function () {                                           
                 likeButtons[i].classList.toggle('like-button--liked');
                 const likesCounter = this.getAttribute('data-postid');
-                // console.log(postsArr[likesCounter].likes);
                 let findLikes = document.getElementById(i);
-                console.log(findLikes);
-                console.log(likeButtons[i].classList)
                 // condition to add or remove likes number based on liked or not
                 if(likeButtons[i].classList.contains('like-button--liked')) {
                     postsArr[likesCounter].likes++; // increment likes counter
@@ -140,7 +139,4 @@ for(let i = 0; i < postsArr.length; i++) {
             }
         );
     };
-
 }
-
-
