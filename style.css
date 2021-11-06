@@ -71,7 +71,6 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #0CD977;
     height: 60px;
     width: 60px;
     overflow: hidden;
@@ -85,11 +84,7 @@ h1 {
     text-transform: uppercase;
 }
 
-.post__text {
-    margin-bottom: 16px;
-}
-
-.post__image {
+.post__image, .post__text {
     margin-bottom: 16px;
 }
 
@@ -115,8 +110,6 @@ h1 {
     background-color: #e3e3e3;
     cursor: pointer;
 }
-
-.like-button__icon { }
 
 .like-button__label {
     font-weight: bold;

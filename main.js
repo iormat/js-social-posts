@@ -58,7 +58,6 @@ const postsArr = [
         "image": "",
         "likes": 12,
     }
-
 ];
 
 // create variable to print
@@ -100,7 +99,6 @@ function addNewPost (name, profilePic, date, postText, image, likes, i) {
     </div>`;    
 }    
 
-
 // print new post for each object
 for(let i = 0; i < postsArr.length; i++) {
     let {name, profilePic, date, postText, image, likes} = postsArr[i];
@@ -109,13 +107,12 @@ for(let i = 0; i < postsArr.length; i++) {
     function imgError(imageErr) {
         imageErr.src = "img/unreadble-image.jpg";
     }
-
     // function to get placeholder img in case of profilePic error
     function profileImgErr(profileErr) {
         profileErr.src = "img/unknown-profile-pic.jpg";
     }
 
-    // function to print 
+    // Print posts 
     addNewPost (name, profilePic, date, postText, image, likes, i);  
 
     // toggle class and add to counter on click
@@ -128,7 +125,7 @@ for(let i = 0; i < postsArr.length; i++) {
                 likeButtons[i].classList.toggle('like-button--liked');
                 const likesCounter = this.getAttribute('data-postid');
                 let findLikes = document.getElementById(i);
-                // condition to add or remove likes number based on liked or not
+                // 3. condition to add or remove likes number based on liked or not
                 if(likeButtons[i].classList.contains('like-button--liked')) {
                     postsArr[likesCounter].likes++; // increment likes counter
                     findLikes.innerHTML = postsArr[likesCounter].likes;
