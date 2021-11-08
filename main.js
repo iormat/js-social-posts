@@ -92,7 +92,7 @@ function addNewPost (name, profilePic, date, postText, image, likes, i) {
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="${i}" class="js-likes-counter">${likes}</b> persone
+                    Piace a <b id="like-counter-${i}" class="js-likes-counter">${likes}</b> persone
                 </div>
             </div> 
         </div>            
@@ -111,29 +111,30 @@ for(let i = 0; i < postsArr.length; i++) {
     function profileImgErr(profileErr) {
         profileErr.src = "img/unknown-profile-pic.jpg";
     }
-
     // Print posts 
     addNewPost (name, profilePic, date, postText, image, likes, i);  
+}
 
-    // toggle class and add to counter on click
-    let likeButtons = document.getElementsByClassName('like-button');
-    // cycle to get each button separatly
-    for(let i = 0; i < likeButtons.length; i++) {                   
-        likeButtons[i].addEventListener('click',
-            // function to get liked button appearance 
-            function () {                                           
-                likeButtons[i].classList.toggle('like-button--liked');
-                const likesCounter = this.getAttribute('data-postid');
-                let findLikes = document.getElementById(i);
-                // 3. condition to add or remove likes number based on liked or not
-                if(likeButtons[i].classList.contains('like-button--liked')) {
-                    postsArr[likesCounter].likes++; // increment likes counter
-                    findLikes.innerHTML = postsArr[likesCounter].likes;
-                }else {
-                    postsArr[likesCounter].likes--; // decrement likes counter
-                    findLikes.innerHTML = postsArr[likesCounter].likes
-                }
+// toggle class and add to counter on click
+let likeButtons = document.getElementsByClassName('like-button');
+// cycle to get each button separatly
+for(let i = 0; i < likeButtons.length; i++) {                   
+    likeButtons[i].addEventListener('click',
+        // function to get liked button appearance 
+        function () {                                           
+            likeButtons[i].classList.toggle('like-button--liked');
+            const likesCounter = this.getAttribute('data-postid');
+            let findLikes = document.getElementById(`like-counter-${i}`);
+            // 3. condition to add or remove likes number based on liked or not
+            if(likeButtons[i].classList.contains('like-button--liked')) {
+                postsArr[likesCounter].likes++; // increment likes counter
+                findLikes.innerHTML = postsArr[likesCounter].likes;
+                console.log(postsArr[i].likes);
+            }else {
+                postsArr[likesCounter].likes--; // decrement likes counter
+                findLikes.innerHTML = postsArr[likesCounter].likes;
+                console.log(postsArr[i].likes);
             }
-        );
-    };
+        }
+    );
 }
